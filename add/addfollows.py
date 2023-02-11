@@ -66,7 +66,7 @@ def followers(account):
 
 src = ["soydalto"]
 
-login("StevHernandez28@gmail.com", "62750606")
+login("", "")
 
 time.sleep(5)
 for account in src:
