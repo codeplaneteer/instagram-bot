@@ -10,20 +10,12 @@ time.sleep(3)
 
 def login(user, passe):
     time.sleep(3)
-    inputuser = web.find_element(
-        By.XPATH,
-        "/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/section/main/article/div[2]/div[1]/div[2]/form/div/div"
-        "[1]/div/label/input"
-    )
+    inputuser = web.find_element(By.CSS_SELECTOR,"#loginForm > div > div:nth-child(1) > div > label > input")
     inputuser.send_keys(user)
-    inpupass = web.find_element(
-        By.XPATH, "/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/section/main/article/div[2]/div[1]/div["
-                  "2]/form/div/div[2]/div/label/input")
+    inpupass = web.find_element(By.CSS_SELECTOR, "#loginForm > div > div:nth-child(2) > div > label > input")
     inpupass.send_keys(passe)
     time.sleep(3)
-    loginButton = web.find_element(
-        By.XPATH, "/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/section/"
-                  "main/article/div[2]/div[1]/div[2]/form/div/div[3]/button").click()
+    loginButton = web.find_element(By.CSS_SELECTOR, "#loginForm > div > div:nth-child(3) > button").click()
 
 
 def followers(account):
@@ -34,7 +26,7 @@ def followers(account):
 
     time.sleep(5)
     while True:
-        if i == 200:
+        if i == 50:
             break
         web.execute_script('arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;',
                            window)
@@ -44,30 +36,66 @@ def followers(account):
 
     follower = web.find_elements(By.XPATH,
                                  "//div[@class='_ab8w  _ab94 _ab97 _ab9f _ab9k _ab9p  _ab9- _aba8 _abcm']")
+
     print("--------")
-    print("total de busqueda:", len(follower))
+    print("Perfiles en la cadena antes de eliminar")
     print("--------")
-# > div > div > span > a > span > div
-    time.sleep(5)
+    newFollows = follower
+    index = 0
+    for child in newFollows:
+        user_name = child.find_element(
+            By.CSS_SELECTOR, "div > div > div > a > span > div")
+        print("Perfiles: " + user_name.text)
+
+    print("---------------")
+    print("---------------")
+    print("---------------")
+    print("---------------")
+
     for child in follower:
         user_name = child.find_element(By.CSS_SELECTOR, "div > div > div > a > span > div")
         button_name = child.find_element(By.CSS_SELECTOR,
                                          "div._ab8w._ab94._ab97._ab9h._ab9k._ab9p._abb0._abcm > button")
+        index += 1
+        if "Seguido" == button_name.text or "Following" == button_name.text or "Requested" == button_name.text or button_name.text == "Followed":
+            del newFollows[index-1]
+            print("Perfil eliminado de la lista:" + user_name.text)
 
-        time.sleep(randint(100,150))
-        if "Seguir" == button_name.text or "Follow" == button_name.text:
+    
+    print("--------")
+    print("Perfiles en la cadena luego de eliminar")
+    print("--------")
+    for child in newFollows:
+        user_name = child.find_element(
+            By.CSS_SELECTOR, "div > div > div > a > span > div")
+        print("Perfiles: " + user_name.text)
+
+        
+    print("--------")
+    print("total de busqueda:", len(newFollows))
+    print("--------")
+# > div > div > span > a > span > div
+    time.sleep(5)
+
+    for child in newFollows:
+        user_name = child.find_element(By.CSS_SELECTOR, "div > div > div > a > span > div")
+        button_name = child.find_element(By.CSS_SELECTOR,
+                                         "div._ab8w._ab94._ab97._ab9h._ab9k._ab9p._abb0._abcm > button")
+
+        if "Seguido" == button_name.text or "Following" == button_name.text or "Requested" == button_name.text or button_name.text == "Followed":
+            print("Ya lo sigues")
+
+        else:
+            time.sleep(randint(100, 150))
             web.execute_script("arguments[0].click();", button_name)
             print(user_name.text + "->Seguido")
-            time.sleep(randint(40,50))
-        else:
-            print("Ya lo sigues")
-            time.sleep(1)
+            time.sleep(randint(40, 50))
 
 
-src = ["soydalto"]
+# src = ["jalasoft", "intellisysdcorp"]
+src = ["tania_lucely"]
 
-login("", "")
 
-time.sleep(5)
+time.sleep(10)
 for account in src:
     followers(account)

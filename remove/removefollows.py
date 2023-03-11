@@ -10,21 +10,13 @@ time.sleep(5)
 
 
 def login(user, passe):
-    time.sleep(5)
-    inputuser = web.find_element(
-        By.XPATH,
-        "/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/section/main/article/div[2]/div[1]/div[2]/form/div/div"
-        "[1]/div/label/input"
-    )
+    time.sleep(3)
+    inputuser = web.find_element(By.CSS_SELECTOR,"#loginForm > div > div:nth-child(1) > div > label > input")
     inputuser.send_keys(user)
-    inpupass = web.find_element(
-        By.XPATH, "/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/section/main/article/div[2]/div[1]/div["
-                  "2]/form/div/div[2]/div/label/input")
+    inpupass = web.find_element(By.CSS_SELECTOR, "#loginForm > div > div:nth-child(2) > div > label > input")
     inpupass.send_keys(passe)
     time.sleep(3)
-    loginButton = web.find_element(
-        By.XPATH, "/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/section/"
-                  "main/article/div[2]/div[1]/div[2]/form/div/div[3]/button").click()
+    loginButton = web.find_element(By.CSS_SELECTOR, "#loginForm > div > div:nth-child(3) > button").click()
 
 
 def openmyfollowers(account_instagram):
@@ -54,14 +46,14 @@ def deletemyfollowers():
     print("--------")
 
     for child in follows:
-        user_name = child.find_element(By.CSS_SELECTOR, "div > div > div > div > a > span > div")
+        user_name = child.find_element(By.CSS_SELECTOR, "div > div > div > a > span > div")
         button_name = child.find_element(By.CSS_SELECTOR,
                                          "div._ab8w._ab94._ab97._ab9h._ab9k._ab9p._abb0._abcm > button")
                
         print(user_name.text)
         print(button_name.text)
         print("------------")
-        if "Siguiendo" == button_name.text or "Following" == button_name.text and user_name.text != "stefany_princess":
+        if "Siguiendo" == button_name.text or "Following" == button_name.text and user_name.text != "stefanyguerna":
             web.execute_script("arguments[0].click();", button_name)
             time.sleep(randint(10,100))
             unfollow = web.find_element(By.XPATH, "//button[@class='_a9-- _a9-_']")
@@ -70,7 +62,7 @@ def deletemyfollowers():
         time.sleep(randint(15,100))
             
 
-login("", "")
+
 time.sleep(5)
 openmyfollowers("stev_hernandez28/following/")
 time.sleep(15)
