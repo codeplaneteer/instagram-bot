@@ -67,5 +67,3 @@ time.sleep(5)
 openmyfollowers("stev_hernandez28/following/")
 time.sleep(15)
 deletemyfollowers()
-# PS C:\Users\Steven\Desktop\Projects\Instagram bot> & "c:/Users/Steven/Desktop/Projects/Instagram bot/.venv/Scripts/Activate.ps1"
-# (.venv) PS C:\Users\Steven\Desktop\Projects\Instagram bot> & "c:/Users/Steven/Desktop/Projects/Instagram bot/.venv/Scripts/python.exe" "c:/Users/Steven/Desktop/Projects/Instagram bot/removefollows.py"
